@@ -1,4 +1,5 @@
 window.Model = function() {
+	// todo: separate list for completed?
 	this.tasks = [];
 	this.onChanges = [];
 
@@ -18,12 +19,22 @@ Model.prototype.inform = function() {
 Model.prototype.add = function(title) {
 	// TODO:TANG add due dates via nlp?
 
-	this.tasks.unshift({
+	var taskNew = {
 		id: this.id_max++,
 		title: title.trim(),
 		tmAdded: new Date(),
 		completed: false,
-	});
+	};
+
+	this.tasks.unshift(taskNew);
+
+	// todo:tang add task UNDER current one
+	// if (this.tasks.length == 0) {
+	// 	this.tasks.unshift(taskNew);
+	// } else {
+	// 	this.tasks.splice(1, 0, taskNew);
+	// 	console.log(this.tasks);
+	// }
 
 	this.inform();
 };

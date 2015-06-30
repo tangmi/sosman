@@ -2,7 +2,7 @@ var Task = React.createClass({
 	render: function() {
 		return (
         	<li>
-        		<label>{this.props.data.id} Ω {this.props.data.title}</label>
+        		<span>{this.props.data.title}</span>
 
         		<TaskControls
         			data={this.props.data}
@@ -19,7 +19,7 @@ var TaskControls = React.createClass({
 	render: function() {
 		// TODO:TANG hide buttons when not applicable
 		return (
-			<span>
+			<span className="task-controls">
 				<a href="#" onClick={this.props.onRemove}>
 					<i className="fa fa-close"></i>
 				</a>
@@ -82,17 +82,21 @@ var App = React.createClass({
 		if(tasks_pending.length > 0) {
 			var top_task = tasks_pending.shift();
 			dom_top_task = (
-				<h2>
-					current:
-					<a href="#" onClick={this.complete.bind(this, top_task)}>
+				<div id="top-task">
+					<a href="#"
+						id="top-task-checkbox"
+						onClick={this.complete.bind(this, top_task)}>
 						<i className="fa fa-check-square-o"></i>
 					</a>
-					{top_task.title}
-					<TaskControls
-						data={top_task}
-						onRemove={this.remove.bind(this, top_task)}
-						onBury={this.bury.bind(this, top_task)} />
-				</h2>
+					<div id="top-task-content">
+						{top_task.title}
+
+						<TaskControls
+							data={top_task}
+							onRemove={this.remove.bind(this, top_task)}
+							onBury={this.bury.bind(this, top_task)} />
+					</div>
+				</div>
 			);
 		}
 		
@@ -118,24 +122,28 @@ var App = React.createClass({
 			.map(function(task) {
 				var st_tmCompleted = moment(task.tmCompleted).fromNow(); //.format('MMMM Do YYYY, h:mm:ss a');
 				return (
-					<li>{task.title}, completed {st_tmCompleted}</li>
+					<li>{task.title} <span className="task-completed-on">completed {st_tmCompleted}</span></li>
 				);
 			});
 
         return (
         	<div className="sos">
-	            <div>Sos</div>
+	            <div id="app-title">sosman</div>
 
 	            <input type="text"
 		            ref="newField"
+		            id="task-input"
 		            onKeyDown={this.handleNewTask} />
 
+	            <h2>current</h2>
 		        {dom_top_task}
 
+	            <h2>todo</h2>
 	            <ul id="task-list">
 	            	{dom_tasks}
 	            </ul>
 
+	            <h2>done</h2>
 	            <ul id="task-list-completed">
 		            {dom_tasks_completed}
 	            </ul>
@@ -160,14 +168,3 @@ function render() {
 model.subscribe(render);
 window.setInterval(render, 5000);
 render();
-
-
-
-model.add('hello');
-model.complete(model.tasks[0]);
-model.add('hello2');
-model.add('hellodasfd2');
-model.add('hefasdfasdfllo2');
-model.add('helasdfasdfasdfasdflo2');
-model.add('helasdfasdfsafdsafsdfasdfsdlo2');
-model.add('hello2-last');

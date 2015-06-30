@@ -8,3 +8,4 @@ todo:
 * share model between server and client
 * sync client with server
 * mobile website
+* use flexbox?

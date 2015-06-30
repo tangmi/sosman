@@ -1,9 +1,22 @@
+var storage = {
+	_key: 'sosman_store',
+	get: function() {
+		return JSON.parse(localStorage[this._key] || '[]');
+	},
+	store: function(data) {
+		localStorage[this._key] = JSON.stringify(data);
+	},
+};
+
+
 window.Model = function() {
 	// todo: separate list for completed?
 	this.tasks = [];
 	this.onChanges = [];
 
 	this.id_max = 0;
+
+	this.tasks = storage.get() || [];
 };
 
 Model.prototype.subscribe = function(onChange) {
@@ -11,6 +24,8 @@ Model.prototype.subscribe = function(onChange) {
 };
 
 Model.prototype.inform = function() {
+	storage.store(this.tasks);
+
 	this.onChanges.forEach(function(cb) {
 		cb();
 	});

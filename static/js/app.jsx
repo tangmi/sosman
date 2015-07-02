@@ -128,7 +128,7 @@ var App = React.createClass({
 
         return (
         	<div className="sos">
-	            <div id="app-title">sosman</div>
+	            <div id="app-title">- ̗̀New ̖́- sosman</div>
 
 	            <input type="text"
 		            ref="newField"

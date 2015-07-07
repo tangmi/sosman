@@ -17,8 +17,8 @@ todo tech:
 
 
 ## new prioritization policy (maybe?)
-limit the number of "active" tasks to like 5 or something. any new tasks after that will be added to a "upcoming" list in filo order.
+limit the number of "active" tasks to like 5 or something. any new tasks after that will be added to a "upcoming/backlog" list in filo order.
 tasks now have:
 - a "do now/promote" button on all tasks that pushes a task to the top
 - a "demote" button on the current task that moves it one down or to the bottom of the "active" list
-- a "bury" button on all "active" tasks that sends it to the bottom of to "upcoming" list.
+- a "bury" button on all "active" tasks that sends it to the bottom of to "upcoming/backlog" list.

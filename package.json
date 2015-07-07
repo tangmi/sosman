@@ -9,6 +9,7 @@
   "author": "tangmi",
   "license": "MPL 2.0",
   "dependencies": {
+    "browserify": "^10.2.4",
     "express": "^4.13.0"
   }
 }

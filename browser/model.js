@@ -1,3 +1,5 @@
+// TODO:TANG make more general/agnostic so can reuse on backend!
+
 var storage = {
 	_key: 'sosman_store',
 	get: function() {
@@ -8,8 +10,7 @@ var storage = {
 	},
 };
 
-
-window.Model = function() {
+function Model() {
 	// todo: separate list for completed?
 	this.tasks = [];
 	this.onChanges = [];
@@ -99,3 +100,5 @@ Model.prototype.bury = function(taskCurrent) {
 
 	this.inform();
 };
+
+module.exports = Model;

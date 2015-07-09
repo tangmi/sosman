@@ -1,38 +1,7 @@
-var Task = React.createClass({
-	render: function() {
-		return (
-        	<li>
-        		<span>{this.props.data.title}</span>
+import React from 'react';
 
-        		<TaskControls
-        			data={this.props.data}
-        			onRemove={this.props.onRemove}
-        			onPromote={this.props.onPromote}
-        			onBury={this.props.onBury} />
-           	</li>
-		);
-	}
-});
-
-var TaskControls = React.createClass({
-
-	render: function() {
-		// TODO:TANG hide buttons when not applicable
-		return (
-			<span className="task-controls">
-				<a href="#" onClick={this.props.onRemove}>
-					<i className="fa fa-close"></i>
-				</a>
-				<a href="#" onClick={this.props.onPromote}>
-					<i className="fa fa-hand-o-up"></i>
-				</a>
-				<a href="#" onClick={this.props.onBury}>
-					<i className="fa fa-hand-o-down"></i>
-				</a>
-			</span>
-		);
-	}
-});
+import TaskControls from './task-controls.jsx';
+import Task from './task.jsx';
 
 var ENTER_KEY = 13;
 
@@ -152,19 +121,4 @@ var App = React.createClass({
     }
 });
 
-// do it
-
-var model = new Model();
-
-function render() {
-	React.render(
-		<div className="container">
-			<App model={model} />
-		</div>,
-		document.getElementById('content')
-	);
-};
-
-model.subscribe(render);
-window.setInterval(render, 5000);
-render();
+module.exports = App;

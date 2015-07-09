@@ -18,13 +18,13 @@ app.get('/js/bundle.js', function(req, res) {
 		.on('error', function(err) {
 			var regex = new RegExp(__dirname, 'g');
 
-			res.set('content-type', 'text/plain');
-			res.status(500).send(err.message);
-
 			console.log(err.message.replace(regex, ''));
 			if (err.codeFrame) {
 				console.log(err.codeFrame);
 			}
+
+			res.set('content-type', 'text/plain');
+			res.status(500).send(err.message);
 		})
 		.on('end', function() {
 			console.log('built ok!');

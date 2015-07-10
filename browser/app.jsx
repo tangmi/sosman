@@ -3,53 +3,56 @@ import React from 'react';
 import TaskControls from './task-controls.jsx';
 import Task from './task.jsx';
 
-var ENTER_KEY = 13;
+const ENTER_KEY = 13;
 
-var App = React.createClass({
-	getInitialState: function() {
-		return {};
-	},
+class App extends React.Component {
+	state: {}
 
-	handleNewTask: function(event) {
+	constructor() {
+		super();
+		this.handleNewTask = this.handleNewTask.bind(this);
+	}
+
+	handleNewTask(event) {
 		if (event.keyCode !== ENTER_KEY) {
 			return;
 		}
 
 		event.preventDefault();
 
-		var val = React.findDOMNode(this.refs.newField).value.trim();
+		let val = React.findDOMNode(this.refs.newField).value.trim();
 
 		if (val) {
 			this.props.model.add(val);
 			React.findDOMNode(this.refs.newField).value = '';
 		}
-	},
+	}
 
-	complete: function(task) {
+	complete(task) {
 		this.props.model.complete(task);
-	},
+	}
 
-	remove: function(task) {
+	remove(task) {
 		this.props.model.remove(task);
-	},
+	}
 
-	promote: function(task) {
+	promote(task) {
 		this.props.model.promote(task);
-	},
+	}
 
-	bury: function(task) {
+	bury(task) {
 		this.props.model.bury(task);
-	},
+	}
 
-	render: function() {
-		var tasks_pending = this.props.model.tasks
+	render() {
+		let tasks_pending = this.props.model.tasks
 			.filter(function(task) {
 				return !task.completed;
 			});
 
-		var dom_top_task;
+		let dom_top_task;
 		if(tasks_pending.length > 0) {
-			var top_task = tasks_pending.shift();
+			let top_task = tasks_pending.shift();
 			dom_top_task = (
 				<div id="top-task">
 					<a href="#"
@@ -69,7 +72,7 @@ var App = React.createClass({
 			);
 		}
 		
-		var dom_tasks = tasks_pending
+		let dom_tasks = tasks_pending
 			.map(function(task, i, arr) {
 				// TODO:TANG display age if older than a day?
 				return (
@@ -80,7 +83,7 @@ var App = React.createClass({
 				);
 			}, this);
 
-		var tasks_completed = this.props.model.tasks
+		let tasks_completed = this.props.model.tasks
 			.filter(function(task) {
 				return task.completed;
 			});
@@ -119,6 +122,6 @@ var App = React.createClass({
             </div>
         );
     }
-});
+}
 
 module.exports = App;

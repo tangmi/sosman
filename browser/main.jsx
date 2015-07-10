@@ -13,7 +13,7 @@ const render = () => {
 		document.getElementById('content')
 	);
 
-	console.log('render');
+	// console.log('render');
 }
 
 model.subscribe(render);

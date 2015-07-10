@@ -2,8 +2,8 @@ import React from 'react';
 
 import TaskControls from './task-controls.jsx';
 
-var Task = React.createClass({
-	render: function() {
+class Task extends React.Component {
+	render() {
 		return (
         	<li>
         		<span>{this.props.data.title}</span>
@@ -16,6 +16,6 @@ var Task = React.createClass({
            	</li>
 		);
 	}
-});
+}
 
 module.exports = Task;

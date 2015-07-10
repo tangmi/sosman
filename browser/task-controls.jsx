@@ -1,8 +1,8 @@
 import React from 'react';
 
-var TaskControls = React.createClass({
+class TaskControls extends React.Component {
 
-	render: function() {
+	render() {
 		// TODO:TANG hide buttons when not applicable
 		return (
 			<span className="task-controls">
@@ -18,6 +18,6 @@ var TaskControls = React.createClass({
 			</span>
 		);
 	}
-});
+}
 
 module.exports = TaskControls;

@@ -5,6 +5,7 @@ import Task from './task.jsx';
 
 const ENTER_KEY = 13;
 
+export default
 class App extends React.Component {
 	state: {}
 
@@ -123,5 +124,3 @@ class App extends React.Component {
         );
     }
 }
-
-module.exports = App;

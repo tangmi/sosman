@@ -10,6 +10,7 @@ var storage = {
 	},
 };
 
+export default
 function Model() {
 	// todo: separate list for completed?
 	this.tasks = [];
@@ -100,5 +101,3 @@ Model.prototype.bury = function(taskCurrent) {
 
 	this.inform();
 };
-
-module.exports = Model;

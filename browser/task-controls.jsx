@@ -1,5 +1,6 @@
 import React from 'react';
 
+export default
 class TaskControls extends React.Component {
 
 	render() {
@@ -19,5 +20,3 @@ class TaskControls extends React.Component {
 		);
 	}
 }
-
-module.exports = TaskControls;

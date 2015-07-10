@@ -12,6 +12,7 @@
     "babelify": "^6.1.2",
     "browserify": "^10.2.4",
     "express": "^4.13.0",
+    "moment": "^2.10.3",
     "react": "^0.13.3"
   }
 }

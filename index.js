@@ -1,22 +1,55 @@
+var util = require("util");
+var fs = require("fs");
+
 var express = require('express');
 var app = express();
 app.set('port', process.env.PORT || 3000);
 
+function get_browserify_output(cb) {
+	var cache = require('./stupid_cache');
+	
+	function DbgTimer() {
+		var start = +new Date;
+		this.stop = function() {
+			return (+new Date) - start;
+		}
+	}
 
-// TODO:TANG cache this on process.env.NODE_ENV === 'production'
-var util = require("util");
-var fs = require("fs");
-var browserify = require('browserify');
-var babelify = require("babelify");
+	if(typeof cb !== 'function') {
+		cb = function(err, data) {};
+	}
+
+	var t = new DbgTimer();
+	cache('browserify_output', function(cb) {
+		var b = require('browserify')('./browser/main.jsx', {
+				debug: true
+			})
+			.transform(require("babelify"))
+			.bundle();
+		
+		b.on('error', function(err) {
+			cb(err);
+		});
+
+		var bufs = [];
+		b.on('data', function(chunk) {
+			bufs.push(chunk);
+		});
+		b.on('end', function() {
+			cb(null, Buffer.concat(bufs));
+			console.log('build ok, %ss', t.stop() / 1000);
+		});
+	}, cb);
+}
+if(process.env.NODE_ENV === 'production') {
+	// prerender first thing
+	get_browserify_output();
+}
 app.get('/js/bundle.js', function(req, res) {
 	res.set('content-type', 'application/javascript');
 
-	browserify('./browser/main.jsx', {
-			debug: true
-		})
-		.transform(babelify)
-		.bundle()
-		.on('error', function(err) {
+	get_browserify_output(function(err, data) {
+		if(err) {
 			var regex_dirname = new RegExp(__dirname, 'g');
 
 			console.log(err.message.replace(regex_dirname, ''));
@@ -33,12 +66,11 @@ app.get('/js/bundle.js', function(req, res) {
 					.replace(regex_dirname, '')
 					.replace(/\r?\n/g, '\\n'));
 
-			res.send(msg);
-		})
-		.on('end', function() {
-			console.log('built ok!');
-		})
-		.pipe(res);
+			return res.send(msg);
+		}
+
+		res.send(data);
+	});
 });
 
 app.use(express.static(__dirname + '/static'));

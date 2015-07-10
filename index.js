@@ -30,8 +30,8 @@ app.get('/js/bundle.js', function(req, res) {
 					.replace(regex_dirname, ''),
 				err.codeFrame
 					.replace(/\[[0-9]+m/g, '') // remove console color codes (e.g. `[32m`)
-					.replace(regex_dirname, '').
-					replace(/\r?\n/g, '\\n'));
+					.replace(regex_dirname, '')
+					.replace(/\r?\n/g, '\\n'));
 
 			res.send(msg);
 		})

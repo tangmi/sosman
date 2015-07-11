@@ -13,10 +13,6 @@ app.set('port', process.env.PORT || 3000);
 // TODO:TANG move this out of the server sub-proj?
 const cache = require('./stupid_cache');
 function get_browserify_bundle(cb) {
-	if (typeof cb !== 'function') {
-		cb = function(err, data) {};
-	}
-
 	const f_rebuild_always = process.env.NODE_ENV !== 'production';
 	cache('bundle.js', function(cb) {
 		const b = browserify('./browser/main.jsx', {
@@ -38,10 +34,6 @@ function get_browserify_bundle(cb) {
 	}, cb, f_rebuild_always);
 }
 function get_browserify_vendor(cb) {
-	if (typeof cb !== 'function') {
-		cb = function(err, data) {};
-	}
-
 	cache('vendor.js', function(cb) {
 		const bufs = [];
 		browserify()

@@ -17,9 +17,8 @@ function get_browserify_bundle(cb) {
 		cb = function(err, data) {};
 	}
 
-	const t = new Timer();
 	const f_rebuild_always = process.env.NODE_ENV !== 'production';
-	cache('browserify_output_bundle', function(cb) {
+	cache('bundle.js', function(cb) {
 		const b = browserify('./browser/main.jsx', {
 				debug: process.env.NODE_ENV !== 'production',
 			})
@@ -35,10 +34,7 @@ function get_browserify_bundle(cb) {
 
 		const bufs = [];
 		b.on('data', chunk => bufs.push(chunk));
-		b.on('end', () => {
-			cb(null, Buffer.concat(bufs));
-			console.log('bundle: build ok, %ss', t.elapsed() / 1000);
-		});
+		b.on('end', () => cb(null, Buffer.concat(bufs)));
 	}, cb, f_rebuild_always);
 }
 function get_browserify_vendor(cb) {
@@ -46,18 +42,14 @@ function get_browserify_vendor(cb) {
 		cb = function(err, data) {};
 	}
 
-	cache('browserify_output_vendor', function(cb) {
-		const t = new Timer();
+	cache('vendor.js', function(cb) {
 		const bufs = [];
 		browserify()
 			.require('react')
 			.require('moment')
 			.bundle()
 			.on('data', chunk => bufs.push(chunk))
-			.on('end', () => {
-				cb(null, Buffer.concat(bufs));
-				console.log('vendor: build ok, %ss', t.elapsed() / 1000);
-			});
+			.on('end', () => cb(null, Buffer.concat(bufs)));
 	}, cb);
 }
 if (process.env.NODE_ENV === 'production') {
@@ -92,7 +84,7 @@ app.get('/js/bundle.js', function(req, res) {
 			res.set('content-type', 'application/javascript');
 			res.send(data);
 		}
-		res.end();
+		res.end(); // needed?
 	});
 });
 

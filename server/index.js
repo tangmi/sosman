@@ -71,32 +71,6 @@ app.get('/js/bundle.js', function(req, res) {
 
 app.use(express.static(__dirname + '/static'));
 
-
-async function poop() {
-	const p = new Promise(function(resolve, reject) {
-		throw 9;
-		setTimeout(
-			function() {
-				resolve();
-			}, Math.random() * 2000);
-	});
-
-	// p.then(function() {
-	// 	console.log('ok');
-	// }).catch(function(e) {
-	// 	console.log('err', e)
-	// });
-
-	console.log('start');
-	try {
-		await p;
-	}catch(e) {
-		console.log(e);
-	}
-	console.log('ok');
-}
-poop();
-
 const server = require('http').createServer(app).listen(app.get('port'), function() {
 	console.log('listening on ' + server.address().port);
 });

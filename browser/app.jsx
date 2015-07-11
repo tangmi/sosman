@@ -5,6 +5,9 @@ import TaskControls from './task-controls.jsx';
 import Task from './task.jsx';
 
 
+import shared from '../shared/shared.js';
+shared();
+
 const ENTER_KEY = 13;
 
 export default

@@ -6,20 +6,28 @@ import browserify from 'browserify';
 import babelify from 'babelify';
 
 import express from 'express';
+
+import shared from '../shared/shared';
+shared();
+
 const app = express();
 
 app.set('port', process.env.PORT || 3000);
 
 // TODO:TANG move this out of the server sub-proj?
 const cache = require('./stupid_cache');
+const browserify_vendors = [
+	'react',
+	'moment',
+];
 function get_browserify_bundle(cb) {
 	const f_rebuild_always = process.env.NODE_ENV !== 'production';
 	cache('bundle.js', function(cb) {
-		const b = browserify('./browser/main.jsx', {
+		let b = browserify('./browser/main.jsx', {
 				debug: process.env.NODE_ENV !== 'production',
-			})
-			.external('react') // TODO:TANG refactor this with vendor.js below
-			.external('moment')
+			});
+		browserify_vendors.forEach(vendor => b = b.external(vendor));
+		b = b
 			.transform(babelify.configure({
 				highlightCode: true, // ansi code output?
 			}))
@@ -36,10 +44,9 @@ function get_browserify_bundle(cb) {
 function get_browserify_vendor(cb) {
 	cache('vendor.js', function(cb) {
 		const bufs = [];
-		browserify()
-			.require('react')
-			.require('moment')
-			.bundle()
+		const b = browserify();
+		browserify_vendors.forEach(vendor => b.require(vendor));
+		b.bundle()
 			.on('data', chunk => bufs.push(chunk))
 			.on('end', () => cb(null, Buffer.concat(bufs)));
 	}, cb);

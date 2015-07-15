@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-import TaskControls from './task-controls.jsx';
+import TaskControls from './task_controls.jsx';
 import Task from './task.jsx';
 
 

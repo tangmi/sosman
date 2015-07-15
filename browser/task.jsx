@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TaskControls from './task-controls.jsx';
+import TaskControls from './task_controls.jsx';
 
 export default
 class Task extends React.Component {

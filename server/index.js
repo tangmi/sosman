@@ -7,8 +7,30 @@ import babelify from 'babelify';
 
 import express from 'express';
 
-import shared from '../shared/shared';
-shared();
+import {TaskModel, Task} from '../shared/task_model';
+
+
+// const model = new TaskModel();
+// model.add('hello world');
+// model.add('hello world2');
+
+// console.log(util.inspect(model, false, 999, true));
+
+// const serialized = TaskModel.serialize(model);
+// console.log(serialized);
+// const deserialized = TaskModel.deserialize(serialized);
+// console.log(util.inspect(deserialized, false, 999, true));
+
+// deserialized.add('hello!');
+// console.log(util.inspect(deserialized, false, 999, true));
+
+// console.log('remoive ' + deserialized.data[1].task.id)
+// deserialized.remove(deserialized.data[1].task.id);
+
+// console.log(util.inspect(deserialized, false, 999, true));
+
+// process.exit(0);
+
 
 const app = express();
 
